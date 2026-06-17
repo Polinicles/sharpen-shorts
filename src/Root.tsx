@@ -1,16 +1,16 @@
 import { Composition } from "remotion";
-import { MyComposition } from "./Composition";
+import { CommandExample } from "./CommandExample";
 
-export const RemotionRoot: React.FC = () => {
+export const RemotionRoot = () => {
   return (
     <>
       <Composition
-        id="MyComp"
-        component={MyComposition}
-        durationInFrames={60}
+        id="ChallengeVideo1"
+        component={CommandExample}
+        durationInFrames={405} // 12s content + 1.5s end card at 30fps
         fps={30}
-        width={1280}
-        height={720}
+        width={1080}
+        height={1920}
       />
     </>
   );
