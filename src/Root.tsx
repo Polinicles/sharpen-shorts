@@ -1,17 +1,26 @@
 import { Composition } from "remotion";
-import { CommandExample } from "./CommandExample";
+import { Short } from "./Short";
+import { getDurationInFrames } from "./content/duration";
+import type { ShortContent } from "./content/types";
+import queue from "./content/queue.json";
+
+const FPS = 30;
 
 export const RemotionRoot = () => {
   return (
     <>
-      <Composition
-        id="ChallengeVideo1"
-        component={CommandExample}
-        durationInFrames={405} // 12s content + 1.5s end card at 30fps
-        fps={30}
-        width={1080}
-        height={1920}
-      />
+      {(queue as ShortContent[]).map((content) => (
+        <Composition<any, ShortContent>
+          key={content.id}
+          id={content.id}
+          component={Short}
+          durationInFrames={getDurationInFrames(content, FPS)}
+          fps={FPS}
+          width={1080}
+          height={1920}
+          defaultProps={content}
+        />
+      ))}
     </>
   );
 };

@@ -1,0 +1,19 @@
+[
+  { "id": "rag-purpose", "category": "AI", "topic": "RAG vs fine-tuning vs context window", "date": "2026-06-17" },
+  { "id": "git-reset-hard", "category": "AI", "topic": "git reset --hard data loss", "date": "2026-06-17" },
+  { "id": "api-offset-pagination", "category": "API", "topic": "offset/limit pagination duplicates under concurrent inserts", "date": "2026-06-17" },
+  { "id": "prometheus-gauge-spike", "category": "OBSERVABILITY", "topic": "Prometheus gauge point-in-time sampling misses spikes", "date": "2026-06-18" },
+  { "id": "connection-pool-firewall-timeout", "category": "BACKEND", "topic": "idle DB connection pool entries dropped overnight by firewall/DB timeout", "date": "2026-06-19" },
+  { "id": "docker-layer-cache", "category": "DOCKER", "topic": "COPY . . before RUN npm install busts Docker layer cache", "date": "2026-06-20" },
+  { "id": "payment-idempotency", "category": "API", "topic": "idempotency keys prevent duplicate charges on retry", "date": null },
+  { "id": "db-trigger-phantom-rows", "category": "DATABASES", "topic": "database trigger inserts rows without explicit INSERT", "date": null },
+  { "id": "circuit-breaker", "category": "DISTRIBUTED SYSTEMS", "topic": "circuit breaker prevents cascading failures", "date": null },
+  { "id": "mfa-after-leak", "category": "SECURITY", "topic": "MFA still effective after password leak", "date": null },
+  { "id": "go-retry-storm", "category": "GOLANG", "topic": "aggressive retries during outage cause CPU spike (retry storm)", "date": null },
+  { "id": "n-plus-one-queries", "category": "DATABASES", "topic": "ORM lazy-loading causes N+1 queries on list views", "date": "2026-06-20" },
+  { "id": "jwt-alg-none", "category": "SECURITY", "topic": "JWT alg:none header lets servers skip signature verification", "date": "2026-06-20" },
+  { "id": "cache-stampede", "category": "DISTRIBUTED SYSTEMS", "topic": "cache stampede / thundering herd on key expiry", "date": "2026-06-20" },
+  { "id": "lost-update-race", "category": "CONCURRENCY", "topic": "non-atomic read-modify-write causes a lost update race", "date": "2026-06-20" },
+  { "id": "force-push-rewrite", "category": "GIT", "topic": "force-push overwrites branch ref, old commits become unreachable not deleted", "date": "2026-06-20" },
+  { "id": "idempotency-key-retry", "category": "API", "topic": "idempotency keys dedupe retried payment requests", "date": "2026-06-20" }
+]

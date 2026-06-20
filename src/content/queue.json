@@ -1,0 +1,116 @@
+[
+  {
+    "id": "n-plus-one-queries",
+    "category": "DATABASES",
+    "icon": "Database",
+    "question": ["A user list fires 101", "queries. Why? 🐢"],
+    "answers": [
+      "ORM lazy-loads each relation alone",
+      "Database needs a missing index",
+      "Connection pool is too small",
+      "Query planner picked a bad plan"
+    ],
+    "correctIndex": 0,
+    "explanation": [
+      "Each row triggers its own query",
+      "for the related data — N+1.",
+      "Eager-load with a JOIN instead."
+    ],
+    "accuracyReviewed": true
+  },
+  {
+    "id": "jwt-alg-none",
+    "category": "SECURITY",
+    "icon": "Shield",
+    "question": ["An attacker forges a JWT", "with no signature. Why? 🔓"],
+    "answers": [
+      "TLS wasn't enforced on the request",
+      "The secret key was too short",
+      "Server honors the token's alg:none",
+      "Token expiry wasn't checked"
+    ],
+    "correctIndex": 2,
+    "explanation": [
+      "Some libraries trust the alg",
+      "field in the token header — set",
+      "to 'none', they skip verification."
+    ],
+    "accuracyReviewed": true
+  },
+  {
+    "id": "cache-stampede",
+    "category": "DISTRIBUTED SYSTEMS",
+    "icon": "Network",
+    "question": ["A cache key expires.", "DB gets hit. Why? 🐘"],
+    "answers": [
+      "Cache TTL was set too short",
+      "Database connection pool exhausted",
+      "The cache server restarted",
+      "Every request misses, hits DB at once"
+    ],
+    "correctIndex": 3,
+    "explanation": [
+      "Every concurrent request misses",
+      "the expired key and hits the DB",
+      "at the same time — a stampede."
+    ],
+    "accuracyReviewed": true
+  },
+  {
+    "id": "lost-update-race",
+    "category": "CONCURRENCY",
+    "icon": "Cpu",
+    "question": ["Two requests increment", "a counter. Why +1? 🏁"],
+    "answers": [
+      "The database rolled back silently",
+      "Read-then-write isn't atomic",
+      "Counter column has wrong type",
+      "Cache wasn't invalidated in time"
+    ],
+    "correctIndex": 1,
+    "explanation": [
+      "Both requests read the same",
+      "value and write old+1 — one",
+      "increment overwrites the other."
+    ],
+    "accuracyReviewed": true
+  },
+  {
+    "id": "force-push-rewrite",
+    "category": "GIT",
+    "icon": "GitBranch",
+    "question": ["A teammate force-pushes", "Commits vanish. Why? 🌿"],
+    "answers": [
+      "Git garbage-collected old commits",
+      "Your local repo is out of sync",
+      "Force-push overwrote the branch ref",
+      "The remote rejected your push"
+    ],
+    "correctIndex": 2,
+    "explanation": [
+      "Force-push moves the branch",
+      "pointer without merging — old",
+      "commits are unreachable, not gone."
+    ],
+    "accuracyReviewed": true
+  },
+  {
+    "id": "idempotency-key-retry",
+    "category": "API",
+    "icon": "Plug",
+    "question": ["A retried payment request", "isn't charged twice. Why? 💳"],
+    "answers": [
+      "The bank deduplicates charges",
+      "An idempotency key dedupes retries",
+      "The API rate-limited the retry",
+      "TLS prevented the duplicate"
+    ],
+    "correctIndex": 1,
+    "explanation": [
+      "The client resends the same",
+      "idempotency key on retry — the",
+      "API returns the original result."
+    ],
+    "accuracyReviewed": true
+  }
+]

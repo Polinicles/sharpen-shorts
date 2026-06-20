@@ -24,6 +24,8 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc",
+    "validate": "node scripts/validate-content.js && tsc --noEmit",
+    "render:all": "node scripts/render-all.js"
   }
 }

@@ -1,30 +1,38 @@
 import React from "react";
-import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { Plug } from "lucide-react";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import { ICONS } from "./content/icons";
+import type { ShortContent } from "./content/types";
+import { Music } from "./components/Music";
+import { DEFAULT_EXPLANATION_SECONDS, DEFAULT_REVEAL_SECONDS } from "./content/duration";
 
-export const CommandExample: React.FC = () => {
+const END_CARD_FADE_FRAMES = 15;
+
+export const Short: React.FC<ShortContent> = ({
+  category,
+  icon,
+  question,
+  codeSnippet,
+  answers,
+  correctIndex,
+  explanation,
+  timing,
+}) => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
 
-  const revealFrame = 240;
-  const revealed = frame >= revealFrame;
-
-  const endCardStart = 360;
-  const showEndCard = frame >= endCardStart;
-  const endCardOpacity = Math.min(1, (frame - endCardStart) / 15);
-
-  const progress = Math.max(
-    0,
-    100 - (frame / revealFrame) * 100
+  const revealFrame = Math.round((timing?.revealSeconds ?? DEFAULT_REVEAL_SECONDS) * fps);
+  const explanationFrames = Math.round(
+    (timing?.explanationSeconds ?? DEFAULT_EXPLANATION_SECONDS) * fps
   );
+  const endCardStart = revealFrame + explanationFrames;
 
-  const answers = [
-    "The DB isn't sorting results",
-    "The page size is too large",
-    "The client is caching pages",
-    "Inserts shift row positions",
-  ];
+  const revealed = frame >= revealFrame;
+  const showEndCard = frame >= endCardStart;
+  const endCardOpacity = Math.min(1, (frame - endCardStart) / END_CARD_FADE_FRAMES);
 
-  const correctIndex = 3;
+  const progress = Math.max(0, 100 - (frame / revealFrame) * 100);
+
+  const Icon = ICONS[icon];
 
   if (showEndCard) {
     return (
@@ -84,6 +92,8 @@ export const CommandExample: React.FC = () => {
         >
           One engineering challenge a day
         </div>
+
+        <Music />
       </AbsoluteFill>
     );
   }
@@ -97,8 +107,7 @@ export const CommandExample: React.FC = () => {
         paddingRight: 90,
         paddingTop: 32,
         paddingBottom: 32,
-        fontFamily:
-          "Inter, Arial, Helvetica, sans-serif",
+        fontFamily: "Inter, Arial, Helvetica, sans-serif",
         display: "flex",
         flexDirection: "column",
       }}
@@ -141,11 +150,8 @@ export const CommandExample: React.FC = () => {
               marginBottom: 28,
             }}
           >
-            <Plug
-              size={28}
-              strokeWidth={2.5}
-            />
-            <span>API</span>
+            <Icon size={28} strokeWidth={2.5} />
+            <span>{category}</span>
           </div>
 
           {/* QUESTION */}
@@ -157,9 +163,44 @@ export const CommandExample: React.FC = () => {
               color: "#FFFFFF",
             }}
           >
-            New rows are inserted
-            while paging with offset/limit.
-            Why do users see duplicates? 🔁
+            {question.map((line, i) => (
+              <React.Fragment key={i}>
+                {i > 0 && <br />}
+                {line}
+              </React.Fragment>
+            ))}
+
+            {codeSnippet && (
+              <div
+                style={{
+                  marginTop: 20,
+                  marginBottom: 20,
+
+                  padding: "14px 24px",
+
+                  borderRadius: 14,
+
+                  backgroundColor: "#0F172A",
+                  border: "1px solid #334155",
+
+                  fontFamily: "monospace",
+
+                  fontSize: 40,
+                  fontWeight: 700,
+
+                  color: "#F8FAFC",
+
+                  display: "inline-block",
+                }}
+              >
+                {codeSnippet.map((line, i) => (
+                  <React.Fragment key={i}>
+                    {i > 0 && <br />}
+                    {line}
+                  </React.Fragment>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -190,25 +231,14 @@ export const CommandExample: React.FC = () => {
 
                   borderRadius: 24,
 
-                  border:
-                    revealed && correct
-                      ? "2px solid #22C55E"
-                      : "2px solid #334155",
+                  border: revealed && correct ? "2px solid #22C55E" : "2px solid #334155",
 
-                  backgroundColor:
-                    revealed && correct
-                      ? "#14532D"
-                      : "#1E293B",
+                  backgroundColor: revealed && correct ? "#14532D" : "#1E293B",
 
                   boxShadow:
-                    revealed && correct
-                      ? "0 0 40px rgba(34,197,94,.35)"
-                      : "none",
+                    revealed && correct ? "0 0 40px rgba(34,197,94,.35)" : "none",
 
-                  opacity:
-                    revealed && !correct
-                      ? 0.4
-                      : 1,
+                  opacity: revealed && !correct ? 0.4 : 1,
                 }}
               >
                 {/* LETTER */}
@@ -219,15 +249,9 @@ export const CommandExample: React.FC = () => {
 
                     borderRadius: 999,
 
-                    backgroundColor:
-                      revealed && correct
-                        ? "#22C55E"
-                        : "#334155",
+                    backgroundColor: revealed && correct ? "#22C55E" : "#334155",
 
-                    color:
-                      revealed && correct
-                        ? "#0B1220"
-                        : "#FFFFFF",
+                    color: revealed && correct ? "#0B1220" : "#FFFFFF",
 
                     display: "flex",
                     alignItems: "center",
@@ -282,13 +306,11 @@ export const CommandExample: React.FC = () => {
               marginTop: 70,
             }}
           >
-
             <div
               style={{
                 height: 24,
 
-                backgroundColor:
-                  "#1E293B",
+                backgroundColor: "#1E293B",
 
                 borderRadius: 999,
 
@@ -301,8 +323,7 @@ export const CommandExample: React.FC = () => {
 
                   width: `${progress}%`,
 
-                  background:
-                    "linear-gradient(90deg,#38BDF8,#4FD1C5)",
+                  background: "linear-gradient(90deg,#38BDF8,#4FD1C5)",
                 }}
               />
             </div>
@@ -313,27 +334,25 @@ export const CommandExample: React.FC = () => {
         {revealed && (
           <div
             style={{
-              marginTop: 60,
+              marginTop: 40,
 
-              backgroundColor:
-                "#111827",
+              backgroundColor: "#111827",
 
-              border:
-                "1px solid #1F2937",
+              border: "1px solid #1F2937",
 
               borderRadius: 24,
 
-              padding: 36,
+              padding: 30,
             }}
           >
             <div
               style={{
-                fontSize: 42,
+                fontSize: 36,
                 fontWeight: 800,
 
                 color: "#22C55E",
 
-                marginBottom: 16,
+                marginBottom: 12,
               }}
             >
               ✓ Correct Answer
@@ -341,21 +360,25 @@ export const CommandExample: React.FC = () => {
 
             <div
               style={{
-                fontSize: 54,
-                lineHeight: 1.2,
+                fontSize: 40,
+                lineHeight: 1.25,
                 fontWeight: 600,
 
                 color: "#CBD5E1",
               }}
             >
-              OFFSET counts rows by position.
-              Insert a row early → everything
-              shifts down → page 2 repeats
-              what was on page 1.
+              {explanation.map((line, i) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <br />}
+                  {line}
+                </React.Fragment>
+              ))}
             </div>
           </div>
         )}
       </div>
+
+      <Music />
     </AbsoluteFill>
   );
 };
